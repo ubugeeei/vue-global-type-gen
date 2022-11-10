@@ -1,15 +1,41 @@
 import minimist from 'minimist'
+import buildOptions from 'minimist-options'
 
-export const run = async (args: string[]) => {
-  const argv = minimist(args, {
-    string: ['version', 'out', 'dir', 'include', 'exclude'],
-    alias: { v: 'version', o: 'out', d: 'dir', i: 'include', e: 'exclude' }
+import { generate } from './generate'
+
+export const run = async () => {
+  const options = buildOptions({
+    version: {
+      type: 'boolean',
+      alias: 'v',
+      default: false
+    },
+    out: {
+      type: 'string',
+      alias: 'o',
+      default: 'auto-import.d.ts'
+    },
+    dir: {
+      type: 'string',
+      alias: 'd',
+      default: 'components'
+    },
+    include: {
+      type: 'array',
+      alias: 'i',
+      default: []
+    },
+    exclude: {
+      type: 'array',
+      alias: 'e',
+      default: []
+    }
   })
 
-  argv.version !== undefined
+  const argv = minimist(process.argv.slice(2), options)
+
+  const { out, dir, include, exclude } = argv
+  argv.version
     ? console.log(`v${require('../package.json').version}`)
-    : (() => {
-        // TODO:
-        console.log('hello')
-      })()
+    : generate({ out, dir, include, exclude })
 }

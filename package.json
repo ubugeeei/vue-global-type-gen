@@ -48,7 +48,8 @@
     "trailingComma": "none"
   },
   "dependencies": {
-    "minimist": "^1.2.7"
+    "minimist": "^1.2.7",
+    "minimist-options": "^4.1.0"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",
