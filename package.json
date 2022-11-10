@@ -4,9 +4,66 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "pnpm run rimraf && tsc",
+    "rimraf": "node -e \"require('fs').rmdirSync('dist', { recursive: true })\""
+  },
+  "volta": {
+    "node": "16.18.1"
   },
   "keywords": [],
   "author": "Ubugeeei <ubuge1122@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "extends": [
+      "standard",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "root": true,
+    "rules": {
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/camelcase": "off",
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
+  "dependencies": {
+    "minimist": "^1.2.7"
+  },
+  "devDependencies": {
+    "@types/minimist": "^1.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "prettier": "^2.3.2",
+    "prettier-plugin-organize-imports": "^2.3.3",
+    "standard-version": "^9.3.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
+  }
 }
