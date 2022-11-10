@@ -1,12 +1,15 @@
 {
   "name": "vue-global-type-gen",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "bin": "bin/index.js",
   "scripts": {
     "build": "pnpm run rimraf && tsc",
-    "rimraf": "node -e \"require('fs').rmdirSync('dist', { recursive: true })\""
+    "rimraf": "node -e \"require('fs').rmdirSync('dist', { recursive: true })\"",
+    "release:major": "standard-version -- --release-as major",
+    "release:minor": "standard-version -- --release-as minor",
+    "release:patch": "standard-version -- --release-as patch"
   },
   "volta": {
     "node": "16.18.1"
