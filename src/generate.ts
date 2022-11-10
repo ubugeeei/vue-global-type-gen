@@ -19,14 +19,18 @@ export const generate = ({
       )
 
   const types = listFiles(dir)
+    .filter(name => name.match(/\.vue/))
     .map(
       it =>
-        `\x20\x20export type ${it
+        `\n\x20\x20\x20\x20${it
           .split('/')
           .at(-1)
-          ?.replace(/\.vue/, '')} = typeof import('${it}').default;\n`
+          ?.replace(/\.vue/, '')}: typeof import('${it}').default;`
     )
     .join('')
 
-  fs.writeFileSync(out, `declare module '@vue/runtime-core' {\n${types}\n}`)
+  fs.writeFileSync(
+    out,
+    `declare module '@vue/runtime-core' {\n\x20\x20export interface GlobalComponents {${types}\n\x20\x20}\n}`
+  )
 }
