@@ -3,7 +3,7 @@ import buildOptions from 'minimist-options'
 
 import { generate } from './generate'
 
-export const run = async () => {
+export const run = async (args: string[]) => {
   const options = buildOptions({
     version: {
       type: 'boolean',
@@ -32,7 +32,7 @@ export const run = async () => {
     }
   })
 
-  const argv = minimist(process.argv.slice(2), options)
+  const argv = minimist(args, options)
 
   const { out, dir, include, exclude } = argv
   argv.version
