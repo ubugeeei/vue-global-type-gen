@@ -10,32 +10,15 @@ export const run = async (args: string[]) => {
       alias: 'v',
       default: false
     },
-    out: {
+    config: {
       type: 'string',
-      alias: 'o',
-      default: 'auto-import.d.ts'
-    },
-    dir: {
-      type: 'string',
-      alias: 'd',
-      default: 'components'
-    },
-    include: {
-      type: 'array',
-      alias: 'i',
-      default: []
-    },
-    exclude: {
-      type: 'array',
-      alias: 'e',
-      default: []
+      alias: 'c',
+      default: 'vue-gt.yml'
     }
   })
 
   const argv = minimist(args, options)
 
-  const { out, dir, include, exclude } = argv
-  argv.version
-    ? console.log(`v${require('../package.json').version}`)
-    : generate({ out, dir, include, exclude })
+  const { config } = argv
+  argv.version ? console.log(`v${require('../package.json').version}`) : generate({ config })
 }

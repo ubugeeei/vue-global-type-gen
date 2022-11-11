@@ -8,6 +8,7 @@
     "dist"
   ],
   "scripts": {
+    "dev": "pnpm run build && node ./bin/index.js -c example/vue-gt.yml",
     "build": "pnpm run rimraf && tsc",
     "rimraf": "node -e \"require('fs').rmdirSync('dist', { recursive: true })\"",
     "release:major": "standard-version --release-as major",
@@ -55,7 +56,9 @@
   },
   "dependencies": {
     "minimist": "^1.2.7",
-    "minimist-options": "^4.1.0"
+    "minimist-options": "^4.1.0",
+    "wildcard-match": "^5.1.2",
+    "yaml": "^2.1.3"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.2",
