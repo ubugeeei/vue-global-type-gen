@@ -66,8 +66,10 @@ const getConfig = (configPath?: string): Required<Config['config']> => {
 }
 
 const listFiles = (dir: string): string[] =>
-  fs
-    .readdirSync(dir, { withFileTypes: true })
-    .flatMap(dirent =>
-      dirent.isFile() ? [`${dir}/${dirent.name}`] : listFiles(`${dir}/${dirent.name}`)
-    )
+  fs.statSync(dir).isDirectory()
+    ? fs
+        .readdirSync(dir, { withFileTypes: true })
+        .flatMap(dirent =>
+          dirent.isFile() ? [`${dir}/${dirent.name}`] : listFiles(`${dir}/${dirent.name}`)
+        )
+    : []
