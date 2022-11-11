@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "dev": "pnpm run build && node ./bin/index.js -c example/vue-gt.yml",
-    "build": "pnpm run rimraf && tsc",
-    "rimraf": "node -e \"require('fs').rmdirSync('dist', { recursive: true })\"",
+    "build": "pnpm run rimraf && mkdir dist && tsc",
+    "rimraf": "rm -rf dist",
     "release:major": "standard-version --release-as major",
     "release:minor": "standard-version --release-as minor",
     "release:patch": "standard-version --release-as patch"
