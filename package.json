@@ -22,7 +22,7 @@
     "release:patch": "standard-version --release-as patch"
   },
   "volta": {
-    "node": "16.18.1"
+    "node": "16.15.0"
   },
   "eslintConfig": {
     "env": {
