@@ -18,15 +18,20 @@ export const generate = ({
         dirent.isFile() ? [`${dir}/${dirent.name}`] : listFiles(`${dir}/${dirent.name}`)
       )
 
-  const types = listFiles(dir)
-    .filter(name => name.match(/\.vue/))
-    .map(
-      it =>
-        `\n\x20\x20\x20\x20${it
-          .split('/')
-          .at(-1)
-          ?.replace(/\.vue/, '')}: typeof import('${it}').default;`
-    )
+  const vueFiles = listFiles(dir).filter(name => name.match(/\.vue/))
+
+  const types = vueFiles
+    .flatMap(it => [
+      `\n\x20\x20\x20\x20${it
+        .split('/')
+        .at(-1)
+        ?.replace(/\.vue/, '')}: typeof import('${it}').default;`,
+      `\n\x20\x20\x20\x20Lazy${it
+        .split('/')
+        .at(-1)
+        ?.replace(/\.vue/, '')}: typeof import('${it}').default;`
+    ])
+    .sort(it => (it.match(/Lazy/) ? 1 : -1))
     .join('')
 
   fs.writeFileSync(
