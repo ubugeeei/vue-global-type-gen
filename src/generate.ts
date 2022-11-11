@@ -4,22 +4,19 @@ import wcmatch from 'wildcard-match'
 
 type Config = {
   config: {
-    includes: string[]
-    excludes: string[]
-    out: string
+    includes?: string[]
+    excludes?: string[]
+    out?: string
   }
 }
 
 export const generate = ({ config: configPath }: { config: string }) => {
-  const yml = fs.readFileSync(configPath, 'utf8')
-  const { config } = parse(yml) as Config
-  config.excludes.push('node_modules')
-
+  const config = getConfig(configPath)
   const vueFiles = getFiles(config)
   gen(config, vueFiles)
 }
 
-const gen = (config: Config['config'], files: string[]) => {
+const gen = (config: Required<Config['config']>, files: string[]) => {
   const types = files
     .flatMap(it => [
       `\n\x20\x20\x20\x20${it
@@ -40,7 +37,7 @@ const gen = (config: Config['config'], files: string[]) => {
   )
 }
 
-const getFiles = (config: Config['config']): string[] =>
+const getFiles = (config: Required<Config['config']>): string[] =>
   listFiles('.')
     .map(it => it.replace('./', ''))
     .filter(
@@ -48,6 +45,25 @@ const getFiles = (config: Config['config']): string[] =>
         config.includes.some((it: string) => wcmatch(it)(name)) &&
         config.excludes.every((it: string) => !wcmatch(it)(name))
     )
+
+const getConfig = (configPath?: string): Required<Config['config']> => {
+  try {
+    const yml = fs.readFileSync(configPath ?? 'vue-gt.yml', 'utf8')
+    const { config } = parse(yml) as Config
+    const { out, includes, excludes } = config
+    return {
+      out: out ?? 'auto-import.d.ts',
+      includes: includes ?? ['components/**/*.vue', 'pages/**/*.vue'],
+      excludes: excludes ? [...excludes, 'node_modules'] : ['node_modules']
+    }
+  } catch {
+    return {
+      includes: ['components/**/*.vue', 'pages/**/*.vue'],
+      excludes: ['node_modules'],
+      out: 'auto-import.d.ts'
+    }
+  }
+}
 
 const listFiles = (dir: string): string[] =>
   fs
