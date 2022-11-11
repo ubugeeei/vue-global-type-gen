@@ -36,10 +36,10 @@ configure your npm scripts
 
 # CLI Options
 
-| option        | default    | description          |     |     |
-| ------------- | ---------- | -------------------- | --- | --- |
-| --config, -c  | vue-gt.yml | your config yml path |     |     |
-| --version, -v | -          | print version        |     |     |
+| option        | default    | description          |
+| ------------- | ---------- | -------------------- |
+| --config, -c  | vue-gt.yml | your config yml path |
+| --version, -v | -          | print version        |
 
 # Configuration
 
