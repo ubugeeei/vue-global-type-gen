@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/Ubugeeei/vue-global-type-gen/compare/v1.0.0...v1.0.1) (2022-11-11)
+
+
+### Documentation
+
+* package.json ([8f13878](https://github.com/Ubugeeei/vue-global-type-gen/commit/8f138788f0fa0cf0abed20fbe16c8d26a1915b01))
+
 ## [1.0.0](https://github.com/Ubugeeei/vue-global-type-gen/compare/v0.1.1...v1.0.0) (2022-11-11)
 
 
