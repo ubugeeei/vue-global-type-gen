@@ -4,8 +4,6 @@ declare module '@vue/runtime-core' {
     ConfirmationDialog: typeof import('example/components/dialogs/ConfirmationDialog.vue').default;
     TextBtn: typeof import('example/components/TextBtn.vue').default;
     Tag: typeof import('example/components/Tag.vue').default;
-    Logo: typeof import('example/components/Logo.vue').default;
-    LazyLogo: typeof import('example/components/Logo.vue').default;
     LazyTag: typeof import('example/components/Tag.vue').default;
     LazyTextBtn: typeof import('example/components/TextBtn.vue').default;
     LazyConfirmationDialog: typeof import('example/components/dialogs/ConfirmationDialog.vue').default;

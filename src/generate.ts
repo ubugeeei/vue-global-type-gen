@@ -2,20 +2,25 @@ import fs from 'fs'
 import { parse } from 'yaml'
 import wcmatch from 'wildcard-match'
 
+type Config = {
+  config: {
+    includes: string[]
+    excludes: string[]
+    out: string
+  }
+}
+
 export const generate = ({ config: configPath }: { config: string }) => {
   const yml = fs.readFileSync(configPath, 'utf8')
-  const { config } = parse(yml)
+  const { config } = parse(yml) as Config
   config.excludes.push('node_modules')
 
-  const vueFiles = listFiles('.')
-    .map(it => it.replace('./', ''))
-    .filter(
-      name =>
-        config.includes.some((it: string) => wcmatch(it)(name)) &&
-        config.excludes.every((it: string) => !wcmatch(it)(name))
-    )
+  const vueFiles = getFiles(config)
+  gen(config, vueFiles)
+}
 
-  const types = vueFiles
+const gen = (config: Config['config'], files: string[]) => {
+  const types = files
     .flatMap(it => [
       `\n\x20\x20\x20\x20${it
         .split('/')
@@ -34,6 +39,15 @@ export const generate = ({ config: configPath }: { config: string }) => {
     `declare module '@vue/runtime-core' {\n\x20\x20export interface GlobalComponents {${types}\n\x20\x20}\n}`
   )
 }
+
+const getFiles = (config: Config['config']): string[] =>
+  listFiles('.')
+    .map(it => it.replace('./', ''))
+    .filter(
+      name =>
+        config.includes.some((it: string) => wcmatch(it)(name)) &&
+        config.excludes.every((it: string) => !wcmatch(it)(name))
+    )
 
 const listFiles = (dir: string): string[] =>
   fs
