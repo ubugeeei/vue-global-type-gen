@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/Ubugeeei/vue-global-type-gen/compare/v0.1.1...v1.0.0) (2022-11-11)
+
+
+### Features
+
+* configure by yml ([e12dccd](https://github.com/Ubugeeei/vue-global-type-gen/commit/e12dccdf23fd5d1f26f43452b3bb7327949e3f87))
+* default option ([f8e7875](https://github.com/Ubugeeei/vue-global-type-gen/commit/f8e7875a5ee50ed4ad059ecf857cd1fa663e44ab))
+* example ([0cbc226](https://github.com/Ubugeeei/vue-global-type-gen/commit/0cbc22690b0525d52ac1b07817a12f4c7cd80ff3))
+* lazy component ([41c7b8d](https://github.com/Ubugeeei/vue-global-type-gen/commit/41c7b8d3631001d3cd0a1e93d32823add12cb1bb))
+
+
+### Refactors
+
+* refactor ([d7520c5](https://github.com/Ubugeeei/vue-global-type-gen/commit/d7520c561035808b5f955ffec3701ae15d3eb4fd))
+
+
+### Documentation
+
+* add readme ([650b9a3](https://github.com/Ubugeeei/vue-global-type-gen/commit/650b9a3f2f4c75a9a2e8adad77486cbd285fd964))
+
 ### [0.1.1](https://github.com/Ubugeeei/vue-global-type-gen/compare/v0.1.0...v0.1.1) (2022-11-10)
 
 
