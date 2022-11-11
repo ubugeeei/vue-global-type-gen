@@ -1,8 +1,14 @@
 {
   "name": "vue-global-type-gen",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "generate global vue components types.",
+  "author": "ubugeeei",
+  "license": "MIT",
+  "homepage": "https://github.com/Ubugeeei/vue-global-type-gen#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ubugeeei/vue-global-type-gen.git"
+  },
   "bin": "bin/index.js",
   "files": [
     "dist"
@@ -18,9 +24,6 @@
   "volta": {
     "node": "16.18.1"
   },
-  "keywords": [],
-  "author": "Ubugeeei <ubuge1122@gmail.com>",
-  "license": "ISC",
   "eslintConfig": {
     "env": {
       "es6": true,
