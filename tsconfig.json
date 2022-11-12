@@ -16,7 +16,7 @@
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": false,
-    "target": "ES5"
+    "target": "ES6"
   },
   "include": [
     "src/**/*"
