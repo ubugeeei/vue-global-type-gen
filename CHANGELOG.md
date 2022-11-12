@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/Ubugeeei/vue-global-type-gen/compare/v1.0.6...v1.1.0) (2022-11-12)
+
+
+### Features
+
+* optional-lazy-compontent ([#8](https://github.com/Ubugeeei/vue-global-type-gen/issues/8)) ([5bd076c](https://github.com/Ubugeeei/vue-global-type-gen/commit/5bd076c5497da6dabf2ca73fdfcf3bd40e6e2b4b))
+* std out ([#7](https://github.com/Ubugeeei/vue-global-type-gen/issues/7)) ([b4413df](https://github.com/Ubugeeei/vue-global-type-gen/commit/b4413df4c1cadb4017add1750dfcd496a86282fc))
+
 ### [1.0.6](https://github.com/Ubugeeei/vue-global-type-gen/compare/v1.0.5...v1.0.6) (2022-11-12)
 
 
