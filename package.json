@@ -9,6 +9,23 @@
     "type": "git",
     "url": "git+https://github.com/Ubugeeei/vue-global-type-gen.git"
   },
+  "keywords": [
+    "vue",
+    "vue2",
+    "vue3",
+    "nuxt",
+    "nuxt2",
+    "nuxt3",
+    "typescript",
+    "type",
+    "global",
+    "components",
+    "pages",
+    "auto import",
+    "type definition",
+    "generator",
+    "cli"
+  ],
   "bin": "bin/index.js",
   "files": [
     "dist"
