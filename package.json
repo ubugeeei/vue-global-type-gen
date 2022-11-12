@@ -14,12 +14,13 @@
     "dist"
   ],
   "scripts": {
-    "dev": "pnpm run build && node ./bin/index.js -c example/vue-gt.yml",
+    "dev": "pnpm run build && node ./bin/index.js -c test/stub/vue-gt.yml",
     "build": "node ./scripts/build.js",
     "rimraf": "rm -rf dist",
     "release:major": "standard-version --release-as major",
     "release:minor": "standard-version --release-as minor",
-    "release:patch": "standard-version --release-as patch"
+    "release:patch": "standard-version --release-as patch",
+    "test": "vitest"
   },
   "volta": {
     "node": "16.15.0"
@@ -78,6 +79,7 @@
     "prettier": "^2.3.2",
     "prettier-plugin-organize-imports": "^2.3.3",
     "standard-version": "^9.3.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "vitest": "^0.25.1"
   }
 }

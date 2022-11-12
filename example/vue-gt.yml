@@ -1,4 +1,0 @@
-config:
-  out: example/auto-import.d.ts
-  includes: [example/components/**/*.vue]
-  excludes: [example/components/Logo.vue]

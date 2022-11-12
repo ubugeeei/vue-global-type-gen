@@ -17,7 +17,10 @@ export const generate = ({ config: configPath }: { config?: string }): void => {
   fs.writeFileSync(c.out, s)
 }
 
-const generateTypeDefString = (config: Required<Config['config']>, files: string[]): string => {
+export const generateTypeDefString = (
+  config: Required<Config['config']>,
+  files: string[]
+): string => {
   const types = files
     .flatMap(it => [
       `\n\x20\x20\x20\x20${it
@@ -35,16 +38,16 @@ const generateTypeDefString = (config: Required<Config['config']>, files: string
   return `declare module '@vue/runtime-core' {\n\x20\x20export interface GlobalComponents {${types}\n\x20\x20}\n}\n`
 }
 
-const getVueComponentFilePaths = (config: Required<Config['config']>): string[] =>
-  recursiveListFilePaths('.')
-    .map(it => it.replace('./', ''))
+export const getVueComponentFilePaths = (config: Required<Config['config']>, dir = '.'): string[] =>
+  recursiveListFilePaths(dir)
+    .map(it => it.replace(`${dir}/`, ''))
     .filter(
       name =>
         config.includes.some((it: string) => wcmatch(it)(name)) &&
         config.excludes.every((it: string) => !wcmatch(it)(name))
     )
 
-const recursiveListFilePaths = (dir: string): string[] =>
+export const recursiveListFilePaths = (dir: string): string[] =>
   fs.statSync(dir).isDirectory()
     ? fs
         .readdirSync(dir, { withFileTypes: true })
@@ -55,7 +58,7 @@ const recursiveListFilePaths = (dir: string): string[] =>
         )
     : []
 
-const getConfig = (configPath?: string): Required<Config['config']> => {
+export const getConfig = (configPath?: string): Required<Config['config']> => {
   try {
     const yml = fs.readFileSync(configPath ?? 'vue-gt.yml', 'utf8')
     const { config } = parse(yml) as Config

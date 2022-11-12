@@ -1,0 +1,4 @@
+config:
+  out: test/stub/auto-import.d.ts
+  includes: ['**/*.vue']
+  excludes: [test/stub/components/Logo.vue]
