@@ -10,13 +10,14 @@ type Config = {
   }
 }
 
-export const generate = ({ config: configPath }: { config: string }) => {
-  const config = getConfig(configPath)
-  const vueFiles = getFiles(config)
-  gen(config, vueFiles)
+export const generate = ({ config: configPath }: { config?: string }): void => {
+  const c = getConfig(configPath)
+  const p = getVueComponentFilePaths(c)
+  const s = generateTypeDefString(c, p)
+  fs.writeFileSync(c.out, s)
 }
 
-const gen = (config: Required<Config['config']>, files: string[]) => {
+const generateTypeDefString = (config: Required<Config['config']>, files: string[]): string => {
   const types = files
     .flatMap(it => [
       `\n\x20\x20\x20\x20${it
@@ -31,20 +32,28 @@ const gen = (config: Required<Config['config']>, files: string[]) => {
     .sort(it => (it.match(/Lazy/) ? 1 : -1))
     .join('')
 
-  fs.writeFileSync(
-    config.out,
-    `declare module '@vue/runtime-core' {\n\x20\x20export interface GlobalComponents {${types}\n\x20\x20}\n}`
-  )
+  return `declare module '@vue/runtime-core' {\n\x20\x20export interface GlobalComponents {${types}\n\x20\x20}\n}\n`
 }
 
-const getFiles = (config: Required<Config['config']>): string[] =>
-  listFiles('.')
+const getVueComponentFilePaths = (config: Required<Config['config']>): string[] =>
+  recursiveListFilePaths('.')
     .map(it => it.replace('./', ''))
     .filter(
       name =>
         config.includes.some((it: string) => wcmatch(it)(name)) &&
         config.excludes.every((it: string) => !wcmatch(it)(name))
     )
+
+const recursiveListFilePaths = (dir: string): string[] =>
+  fs.statSync(dir).isDirectory()
+    ? fs
+        .readdirSync(dir, { withFileTypes: true })
+        .flatMap(dirent =>
+          dirent.isFile()
+            ? [`${dir}/${dirent.name}`]
+            : recursiveListFilePaths(`${dir}/${dirent.name}`)
+        )
+    : []
 
 const getConfig = (configPath?: string): Required<Config['config']> => {
   try {
@@ -64,12 +73,3 @@ const getConfig = (configPath?: string): Required<Config['config']> => {
     }
   }
 }
-
-const listFiles = (dir: string): string[] =>
-  fs.statSync(dir).isDirectory()
-    ? fs
-        .readdirSync(dir, { withFileTypes: true })
-        .flatMap(dirent =>
-          dirent.isFile() ? [`${dir}/${dirent.name}`] : listFiles(`${dir}/${dirent.name}`)
-        )
-    : []
