@@ -7,6 +7,7 @@ type Config = {
     includes?: string[]
     excludes?: string[]
     out?: string
+    stdout?: boolean
   }
 }
 
@@ -14,7 +15,7 @@ export const generate = ({ config: configPath }: { config?: string }): void => {
   const c = getConfig(configPath)
   const p = getVueComponentFilePaths(c)
   const s = generateTypeDefString(c, p)
-  fs.writeFileSync(c.out, s)
+  c.stdout ? console.log(s) : fs.writeFileSync(c.out, s)
 }
 
 export const generateTypeDefString = (
@@ -66,13 +67,15 @@ export const getConfig = (configPath?: string): Required<Config['config']> => {
     return {
       out: out ?? 'auto-import.d.ts',
       includes: includes ?? ['components/**/*.vue', 'pages/**/*.vue'],
-      excludes: excludes ? [...excludes, 'node_modules'] : ['node_modules']
+      excludes: excludes ? [...excludes, 'node_modules'] : ['node_modules'],
+      stdout: config.stdout ?? false
     }
   } catch {
     return {
       includes: ['components/**/*.vue', 'pages/**/*.vue'],
       excludes: ['node_modules'],
-      out: 'auto-import.d.ts'
+      out: 'auto-import.d.ts',
+      stdout: false
     }
   }
 }
