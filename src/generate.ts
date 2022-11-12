@@ -8,6 +8,7 @@ type Config = {
     excludes?: string[]
     out?: string
     stdout?: boolean
+    lazyComponents?: boolean
   }
 }
 
@@ -23,16 +24,18 @@ export const generateTypeDefString = (
   files: string[]
 ): string => {
   const types = files
-    .flatMap(it => [
-      `\n\x20\x20\x20\x20${it
-        .split('/')
-        .at(-1)
-        ?.replace(/\.vue/, '')}: typeof import('${it}').default;`,
-      `\n\x20\x20\x20\x20Lazy${it
-        .split('/')
-        .at(-1)
-        ?.replace(/\.vue/, '')}: typeof import('${it}').default;`
-    ])
+    .flatMap(it => {
+      const componentName = it.split('/').at(-1)?.replace(/\.vue/, '')
+      return [
+        // component type def
+        `\n\x20\x20\x20\x20${componentName}: typeof import('${it}').default;`,
+
+        // lazy component type def
+        config.lazyComponents
+          ? `\n\x20\x20\x20\x20Lazy${componentName}: typeof import('${it}').default;`
+          : undefined
+      ].filter((it): it is string => it !== undefined)
+    })
     .sort(it => (it.match(/Lazy/) ? 1 : -1))
     .join('')
 
@@ -68,14 +71,16 @@ export const getConfig = (configPath?: string): Required<Config['config']> => {
       out: out ?? 'auto-import.d.ts',
       includes: includes ?? ['components/**/*.vue', 'pages/**/*.vue'],
       excludes: excludes ? [...excludes, 'node_modules'] : ['node_modules'],
-      stdout: config.stdout ?? false
+      stdout: config.stdout ?? false,
+      lazyComponents: config.lazyComponents ?? true
     }
   } catch {
     return {
       includes: ['components/**/*.vue', 'pages/**/*.vue'],
       excludes: ['node_modules'],
       out: 'auto-import.d.ts',
-      stdout: false
+      stdout: false,
+      lazyComponents: true
     }
   }
 }

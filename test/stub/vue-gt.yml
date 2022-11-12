@@ -3,3 +3,4 @@ config:
   includes: ['**/*.vue']
   excludes: [test/stub/components/Logo.vue]
   stdout: false
+  lazyComponents: true

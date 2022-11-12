@@ -53,6 +53,7 @@ config:
   includes: [components/**/*.vue, pages/**/*.vue]
   excludes: [node_modules]
   stdout: false # when true, print type definition to std out
+  lazyComponents: true # when true, generate prefix 'Lazy' component
 ```
 
 # Example
