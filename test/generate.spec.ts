@@ -8,7 +8,9 @@ import {
 describe('unit test: generateTypeDefString', () => {
   it('ok', () => {
     expect(
-      generateTypeDefString({ out: '', includes: [], excludes: [] }, ['~/components/Dialog.vue'])
+      generateTypeDefString({ out: '', includes: [], excludes: [], stdout: false }, [
+        '~/components/Dialog.vue'
+      ])
     ).toBe(
       `
 declare module '@vue/runtime-core' {
@@ -22,7 +24,7 @@ declare module '@vue/runtime-core' {
   })
 
   it('empty', () => {
-    expect(generateTypeDefString({ out: '', includes: [], excludes: [] }, [])).toBe(
+    expect(generateTypeDefString({ out: '', includes: [], excludes: [], stdout: false }, [])).toBe(
       `
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -40,7 +42,8 @@ describe('unit test: getVueComponentFilePaths', () => {
         {
           out: '',
           includes: ['**'],
-          excludes: []
+          excludes: [],
+          stdout: false
         },
         'test/stub'
       )
@@ -61,7 +64,8 @@ describe('unit test: getVueComponentFilePaths', () => {
         {
           out: '',
           includes: ['**/*.vue'],
-          excludes: []
+          excludes: [],
+          stdout: false
         },
         'test/stub'
       )
@@ -80,7 +84,8 @@ describe('unit test: getVueComponentFilePaths', () => {
         {
           out: '',
           includes: ['**'],
-          excludes: ['**/*.vue']
+          excludes: ['**/*.vue'],
+          stdout: false
         },
         'test/stub'
       )
@@ -124,7 +129,8 @@ describe('unit test: getConfig', () => {
     expect(getConfig('test/stub/vue-gt.yml')).toEqual({
       out: 'test/stub/auto-import.d.ts',
       includes: ['**/*.vue'],
-      excludes: ['test/stub/components/Logo.vue', 'node_modules']
+      excludes: ['test/stub/components/Logo.vue', 'node_modules'],
+      stdout: false
     })
   })
 
@@ -132,13 +138,15 @@ describe('unit test: getConfig', () => {
     expect(getConfig('test/stub')).toEqual({
       excludes: ['node_modules'],
       includes: ['components/**/*.vue', 'pages/**/*.vue'],
-      out: 'auto-import.d.ts'
+      out: 'auto-import.d.ts',
+      stdout: false
     })
 
     expect(getConfig()).toEqual({
       excludes: ['node_modules'],
       includes: ['components/**/*.vue', 'pages/**/*.vue'],
-      out: 'auto-import.d.ts'
+      out: 'auto-import.d.ts',
+      stdout: false
     })
   })
 })

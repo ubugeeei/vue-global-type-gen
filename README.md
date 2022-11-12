@@ -52,10 +52,9 @@ config:
   out: auto-import.d.ts
   includes: [components/**/*.vue, pages/**/*.vue]
   excludes: [node_modules]
+  stdout: false # when true, print type definition to std out
 ```
 
 # Example
 
 https://user-images.githubusercontent.com/71201308/201339326-0833eaef-9623-4912-9dc5-fd0328e056c4.mov
-
-
