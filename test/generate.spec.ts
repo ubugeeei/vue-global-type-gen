@@ -8,9 +8,10 @@ import {
 describe('unit test: generateTypeDefString', () => {
   it('ok', () => {
     expect(
-      generateTypeDefString({ out: '', includes: [], excludes: [], stdout: false }, [
-        '~/components/Dialog.vue'
-      ])
+      generateTypeDefString(
+        { out: '', includes: [], excludes: [], stdout: false, lazyComponents: true },
+        ['~/components/Dialog.vue']
+      )
     ).toBe(
       `
 declare module '@vue/runtime-core' {
@@ -23,8 +24,30 @@ declare module '@vue/runtime-core' {
     )
   })
 
+  it('ok: without Lazy', () => {
+    expect(
+      generateTypeDefString(
+        { out: '', includes: [], excludes: [], stdout: false, lazyComponents: false },
+        ['~/components/Dialog.vue']
+      )
+    ).toBe(
+      `
+declare module '@vue/runtime-core' {
+  export interface GlobalComponents {
+    Dialog: typeof import('~/components/Dialog.vue').default;
+  }
+}
+`.slice(1)
+    )
+  })
+
   it('empty', () => {
-    expect(generateTypeDefString({ out: '', includes: [], excludes: [], stdout: false }, [])).toBe(
+    expect(
+      generateTypeDefString(
+        { out: '', includes: [], excludes: [], stdout: false, lazyComponents: true },
+        []
+      )
+    ).toBe(
       `
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -43,7 +66,8 @@ describe('unit test: getVueComponentFilePaths', () => {
           out: '',
           includes: ['**'],
           excludes: [],
-          stdout: false
+          stdout: false,
+          lazyComponents: true
         },
         'test/stub'
       )
@@ -65,7 +89,8 @@ describe('unit test: getVueComponentFilePaths', () => {
           out: '',
           includes: ['**/*.vue'],
           excludes: [],
-          stdout: false
+          stdout: false,
+          lazyComponents: true
         },
         'test/stub'
       )
@@ -85,7 +110,8 @@ describe('unit test: getVueComponentFilePaths', () => {
           out: '',
           includes: ['**'],
           excludes: ['**/*.vue'],
-          stdout: false
+          stdout: false,
+          lazyComponents: true
         },
         'test/stub'
       )
@@ -130,7 +156,8 @@ describe('unit test: getConfig', () => {
       out: 'test/stub/auto-import.d.ts',
       includes: ['**/*.vue'],
       excludes: ['test/stub/components/Logo.vue', 'node_modules'],
-      stdout: false
+      stdout: false,
+      lazyComponents: true
     })
   })
 
@@ -139,14 +166,16 @@ describe('unit test: getConfig', () => {
       excludes: ['node_modules'],
       includes: ['components/**/*.vue', 'pages/**/*.vue'],
       out: 'auto-import.d.ts',
-      stdout: false
+      stdout: false,
+      lazyComponents: true
     })
 
     expect(getConfig()).toEqual({
       excludes: ['node_modules'],
       includes: ['components/**/*.vue', 'pages/**/*.vue'],
       out: 'auto-import.d.ts',
-      stdout: false
+      stdout: false,
+      lazyComponents: true
     })
   })
 })
