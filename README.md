@@ -55,7 +55,3 @@ config:
   stdout: false # when true, print type definition to std out
   lazyComponents: true # when true, generate prefix 'Lazy' component
 ```
-
-# Example
-
-https://user-images.githubusercontent.com/71201308/201339326-0833eaef-9623-4912-9dc5-fd0328e056c4.mov
